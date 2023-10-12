@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
+import process from 'process';
 import { nanoid } from 'nanoid';
 import { oceanSentences, spaceSentences, animalSentences } from './sentences.js';
-import { bucketPathStr } from './gc.js';
 
 const allSentences = [...oceanSentences, ...spaceSentences, ...animalSentences];
-
+const bucketPathStr = process.env.BUCKET_PATH_STRING;
 
 function getJsonForStr(str) {
   const obj = {};
@@ -33,7 +33,7 @@ function getTag(i){
 }
 
 function createCSVFile(batchId){
-  const csvFileName = `${batchId}_schema.csv`;
+  const csvFileName = `${batchId}_inputfile.csv`;
   const filesDirPath = path.join(path.dirname(new URL(import.meta.url).pathname), 'files');
   const dirName = `files_${batchId}`;
   const dirPath = path.join(filesDirPath, dirName);
@@ -60,5 +60,3 @@ function run(){
 }
 
 run();
-
-// c89CvLBc

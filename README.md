@@ -1,21 +1,19 @@
 # doc-generator
 
-utility for generating fake training documents and accompanying csv file
+utility for generating fake training documents and accompanying csv input file
 
-1. add a directory called `files` to the root of the project
+1. Make a .env file in the root of the project and add the following line
 
-2. add a file called `gc.js` to the root of the project
-
-3. in `gc.js` add the following code
-
-```javascript
-export const bucketPathStr = "gs://cloud-ai-platform-{{your-bucket-path-here}}";
+```.env
+BUCKET_PATH_STRING = "gs://cloud-ai-platform-{{your-bucket-path-here}}";
 ```
 
-4. run this command to generate a new set of documents and csv file
+2. run this command to generate a new set of documents and csv file.  You will find it all in a directory with a unique name for each batch, under `files/`.
 
 ```bash
 node docMaker.js
 ```
 
-it will put each new batch in a new folder so you can tweak around if you need to
+so you will end up with...
+
+![files](./filespic.png)
