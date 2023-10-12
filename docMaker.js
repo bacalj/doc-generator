@@ -43,7 +43,6 @@ function createCSVFile(batchId){
   // Create the new directory inside the 'files' directory
   fs.mkdirSync(dirPath);
 
-  writeStream.write('gcs_file_uri,label\n');
   allSentences.forEach((sentence, i) => {
     const fileUri = `gs://${bucketPathStr}/files_${batchId}/file${i}.txt`;
     const tag = getTag(i);
