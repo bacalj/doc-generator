@@ -2,8 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { nanoid } from 'nanoid';
 import { oceanSentences, spaceSentences, animalSentences } from './sentences.js';
+import { bucketPathStr } from './gc.js';
 
 const allSentences = [...oceanSentences, ...spaceSentences, ...animalSentences];
+
 
 function getJsonForStr(str) {
   const obj = {};
@@ -13,11 +15,11 @@ function getJsonForStr(str) {
   return JSON.stringify(obj);
 }
 
-function makeTheFiles(){
+function makeTheFiles(batchId){
   allSentences.forEach((sentence, i) => {
     const jsonString = getJsonForStr(sentence);
     const txtFileName = `file${i}.txt`;
-    const dirPath = path.join(path.dirname(new URL(import.meta.url).pathname), 'files');
+    const dirPath = path.join(path.dirname(new URL(import.meta.url).pathname), 'files', `files_${batchId}`);
     fs.writeFile(path.join(dirPath, txtFileName), jsonString, (err) => {
       if (err) throw err;
     });
@@ -30,15 +32,20 @@ function getTag(i){
   if (i >= 20) return 'animal';
 }
 
-function createCSVFile(){
-  const csvFileName = 'schema.csv';
-  const dirPath = path.join(path.dirname(new URL(import.meta.url).pathname), 'files');
+function createCSVFile(batchId){
+  const csvFileName = `${batchId}_schema.csv`;
+  const filesDirPath = path.join(path.dirname(new URL(import.meta.url).pathname), 'files');
+  const dirName = `files_${batchId}`;
+  const dirPath = path.join(filesDirPath, dirName);
   const csvFilePath = path.join(dirPath, csvFileName);
   const writeStream = fs.createWriteStream(csvFilePath);
 
+  // Create the new directory inside the 'files' directory
+  fs.mkdirSync(dirPath);
+
   writeStream.write('gcs_file_uri,tag\n');
   allSentences.forEach((sentence, i) => {
-    const fileUri = `file${i}.txt`;
+    const fileUri = `${bucketPathStr}/files_${batchId}/file${i}.txt`;
     const tag = getTag(i);
     writeStream.write(`${fileUri},${tag}\n`);
   });
@@ -47,9 +54,12 @@ function createCSVFile(){
 }
 
 function run(){
-  makeTheFiles();
-  createCSVFile();
-  console.log("Done!");
+  const batchId = nanoid().substring(0, 8);
+  createCSVFile(batchId);
+  makeTheFiles(batchId);
+  console.log("Done with batchId: ", batchId);
 }
 
 run();
+
+// c89CvLBc
