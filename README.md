@@ -2,10 +2,10 @@
 
 This is a utility for generating fake training documents and accompanying csv input file
 
-1. Make a .env file in the root of the project and add the following line
+1. Make a .env file in the root of the project and add the following line, substituting the unique part of the bucket path for the xxx-xxx-xxx part.
 
 ```.env
-BUCKET_PATH_STRING = "gs://cloud-ai-platform-{{your-bucket-path-here}}";
+BUCKET_PATH_STRING = "gs://cloud-ai-platform-xxx-xxx-xxx";
 ```
 
 2. Run this command to generate a new set of documents and csv file.
