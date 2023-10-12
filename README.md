@@ -16,4 +16,4 @@ node docMaker.js
 
 The input file and training documents will be written to their own directory, like this:
 
-![files](./filespic.png)
+![files](./pic.png)
