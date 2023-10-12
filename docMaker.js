@@ -36,11 +36,11 @@ function createCSVFile(){
   const csvFilePath = path.join(dirPath, csvFileName);
   const writeStream = fs.createWriteStream(csvFilePath);
 
-  writeStream.write('fileName,words,tag\n');
+  writeStream.write('gcs_file_uri,tag\n');
   allSentences.forEach((sentence, i) => {
-    const fileNameStr = `file${i}.txt`;
+    const fileUri = `file${i}.txt`;
     const tag = getTag(i);
-    writeStream.write(`${fileNameStr},${sentence},${tag}\n`);
+    writeStream.write(`${fileUri},${tag}\n`);
   });
 
   writeStream.end();
