@@ -45,7 +45,7 @@ function createCSVFile(batchId){
 
   writeStream.write('gcs_file_uri,tag\n');
   allSentences.forEach((sentence, i) => {
-    const fileUri = `${bucketPathStr}/files_${batchId}/file${i}.txt`;
+    const fileUri = `gs://${bucketPathStr}/files_${batchId}/file${i}.txt`;
     const tag = getTag(i);
     writeStream.write(`${fileUri},${tag}\n`);
   });
