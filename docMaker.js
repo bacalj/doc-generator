@@ -1,11 +1,10 @@
 import fs from 'fs';
 import path from 'path';
-import process from 'process';
 import { nanoid } from 'nanoid';
 import { oceanSentences, spaceSentences, animalSentences } from './sentences.js';
+import { bucketPathStr } from './config.js';
 
 const allSentences = [...oceanSentences, ...spaceSentences, ...animalSentences];
-const bucketPathStr = process.env.BUCKET_PATH_STRING;
 
 function getJsonForStr(str) {
   const obj = {};
